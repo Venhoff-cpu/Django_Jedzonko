@@ -1,0 +1,82 @@
+{% extends "__base__.html" %}
+{% block title %}{% endblock title %}
+{% block content %}
+<div class="dashboard-content border-dashed p-3 m-4 view-height">
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <div class="alert alert-success" role="alert">
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    </div>
+    {% endfor %}
+</ul>
+{% endif %}
+    <div class="row border-bottom border-3 p-1 m-1">
+        <div class="col noPadding">
+            <h3 class="color-header text-uppercase">SZCZEGÓŁY PLANU</h3>
+        </div>
+        <div class="col d-flex justify-content-end mb-2 noPadding">   
+            <a href="{% url 'add_recipe_to_schedule' %}" class="btn btn-outline-primary" role="button" style="margin:5px">Dodaj przepis do planu</a>
+            <a href="{% url 'schedules_list' %}" class="btn btn-outline-success" role="button" style="margin:5px">Powrót</a>
+        </div>
+    </div>
+
+    <div class="schedules-content">
+        <div class="schedules-content-header">
+            <div class="form-group row">
+                                <span class="col-sm-2 label-size col-form-label">
+                                    Nazwa planu
+                                </span>
+                <div class="col-sm-10">
+                    <p class="schedules-text">{{ name }}</p>
+                </div>
+            </div>
+            <div class="form-group row">
+                                <span class="col-sm-2 label-size col-form-label">
+                                    Opis planu
+                                </span>
+                <div class="col-sm-10">
+                    <p class="schedules-text">
+                        {{ description }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% for day, meals in days.items %}
+        <table class="table">
+            {% if meals %}
+            <thead>
+            <tr class="d-flex">
+                <th class="col-2">{{ day }}</th>
+                <th class="col-7"></th>
+                <th class="col-1"></th>
+                <th class="col-2"></th>
+            </tr>
+            </thead>
+            <tbody class="text-color-lighter">
+            {% for meal in meals %}
+            <tr class="d-flex">
+                <td class="col-2">{{ meal.meal_name }}</td>
+                <td class="col-7">{{ meal.recipe_id.name }}</td>
+                <td class="col-1 center">
+                    <form action="#" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger rounded-0 text-light m-1" value="{{ meal.id }}"
+                               name="del">
+                            Usuń
+                        </button>
+                    </form>
+                </td>
+                <td class="col-2 center">
+                    <a href="{% url 'details_recipe' id=meal.recipe_id.id %}"
+                       class="btn btn-info rounded-0 text-light m-1">Szczegóły</a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+            {% endif %}
+        </table>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

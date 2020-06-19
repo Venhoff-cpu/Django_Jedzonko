@@ -1,0 +1,83 @@
+{% extends "__base__.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+<div class="dashboard-content border-dashed p-3 m-4 view-height">
+{% if messages %}
+    <ul class="messages list-unstyled">
+        {% for message in messages %}
+        <div class="alert alert-success" role="alert">
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        </div>
+        {% endfor %}
+    </ul>
+{% endif %}
+    <div class="mt-4 ml-4 mr-4">
+        <div class="row border-bottom border-3">
+            <div class="col"><h3 class="color-header text-uppercase">Szczegóły
+                przepisu</h3></div>
+            <form action="{% url 'details_recipe' r_id %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="recipe_id" value="{{ r_id }}">
+                <div class="col d-flex justify-content-end mb-2">
+                    <input type="submit" class="btn btn-success"
+                           name="like" value="Polub przepis" style="margin:2px">
+                    <input type="submit" class="btn btn-danger"
+                           name="dislike" value="Nie lubię przepisu" style="margin:2px">
+                </div>
+            </form>
+            <div class="col d-flex justify-content-end mb-4">
+                <a href="{% url 'add_recipe_to_schedule' %}" class="btn btn-outline-primary" role="button" style="margin:5px">Dodaj przepis do planu</a>
+                <a href="{% url 'recipes_list' %}" class="btn btn-outline-secondary" role="button" style="margin:5px">Powrót</a>
+            </div>
+        </div>
+
+        <table class="table borderless">
+            <tbody>
+            <tr class="d-flex">
+                <th scope="row" class="col-2">Nazwa Przepisu</th>
+                <td class="col-7">
+                    {{ r_name }}
+                </td>
+            </tr>
+            <tr class="d-flex">
+                <th scope="row" class="col-2">Opis przepisu</th>
+                <td class="col-7">
+                    {{ r_description }}
+                </td>
+            </tr>
+            <tr class="d-flex">
+                <th scope="row" class="col-2">Przygotowanie (minuty)</th>
+                <td class="col-7">
+                    {{ r_time }}
+                </td>
+            </tr>
+             <tr class="d-flex">
+                <th scope="row" class="col-2">Liczba polubień</th>
+                <td class="col-7">
+                    {{ r_vote }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="row d-flex">
+            <div class="col-5 border-bottom border-3"><h3
+                    class="text-uppercase">Sposób przygotowania</h3></div>
+            <div class="col-2"></div>
+            <div class="col-5 border-bottom border-3"><h3
+                    class="text-uppercase">Składniki</h3></div>
+        </div>
+        <div class="row d-flex">
+            <div class="col-5 p-4">
+                <p>{{ r_preparation }}.</p>
+            </div>
+            <div class="col-2"></div>
+            <ul class="col-5 p-4 list-unstyled">
+                {% for i in r_ingredients %}
+                <li>{{ i }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock content %}

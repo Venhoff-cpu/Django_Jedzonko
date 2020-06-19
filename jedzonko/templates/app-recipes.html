@@ -1,0 +1,90 @@
+{% extends "__base__.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+<div class="dashboard-content border-dashed p-3 m-4 view-height">
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <div class="alert alert-success" role="alert">
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    </div>
+    {% endfor %}
+</ul>
+{% endif %}
+    <div class="row border-bottom border-3 p-1 m-1">
+        <div class="col noPadding"><h3 class="color-header text-uppercase">Lista
+            Przepisów</h3></div>
+        <div class="col noPadding d-flex justify-content-end"><a
+                href="{% url 'add_recipe' %}"
+                type="button" class="btn btn-outline-success" style="margin:5px">Dodaj przepis</a>
+                <a 
+                href="{% url 'add_recipe_to_schedule' %}" class="btn btn-outline-primary" role="button" style="margin:5px">
+                    Dodaj przepis do planu</a>
+                <a
+                href="{% url 'dashboard' %}"
+                type="button" class="btn btn-outline-dark" style="margin:5px">
+            Powrót do Dashbordu</a></div>
+    </div>
+    <table class="table border-bottom schedules-content">
+        <thead>
+            <tr class="d-flex text-color-darker">
+                    <th scope="col" class="col-1">ID</th>
+                    <th scope="col" class="col-2">NAZWA</th>
+                    <th scope="col" class="col-7">OPIS</th>
+                    <th scope="col" class="col-2 center">AKCJE</th>
+            </tr>
+        </thead>
+
+        <tbody class="text-color-lighter">
+            {% for recipe in recipes %}
+            <tr class="d-flex">
+                <td class="col-1">
+                    {{ recipe.id }}
+                </td>
+                <td class="col-2">
+                    {{ recipe.name }} ({{ recipe.votes }})
+                </td>
+                <td class="col-7">
+                    {{ recipe.description }}
+                </td>
+                <td class="col-2 d-flex align-items-center justify-content-center flex-wrap">
+                    <form action="#" method="post">
+                        {% csrf_token %}
+                        <button type="submit" value="{{ recipe.id }}" name="del"
+                        class="btn btn-danger rounded-0 text-light m-1">Usuń</button>
+                    </form>
+                    <a href="{% url 'details_recipe' id=recipe.id %}"
+                        class="btn btn-info rounded-0 text-light m-1">Szczegóły</a>
+                    <a href="{% url 'modify_recipe' recipe.id %}"
+                        class="btn btn-warning rounded-0 text-light m-1">Edytuj</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div>
+    {% if recipes.has_other_pages %}
+        <ul class="pagination">
+            {% if recipes.has_previous %}
+                <li><a href="?page={{ recipes.previous_page_number }}">&laquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&laquo;</span></li>
+            {% endif %}
+            {% for i in recipes.paginator.page_range %}
+                {% if recipes.number == i %}
+                    <li class="active"><span> {{ i }} <span class="sr-only">(current)</span></span></li>
+                {% else %}
+                    <li><a href="?page={{ i }}"> {{ i }} </a></li>
+                {% endif %}
+            {% endfor %}
+            {% if recipes.has_next %}
+                <li><a href="?page={{ recipes.next_page_number }}">&raquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&raquo;</span></li>
+            {% endif %}
+        </ul>
+    {% endif %}
+</div>
+{% endblock content %}
