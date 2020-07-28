@@ -1,4 +1,4 @@
-# Django_Jedzonko
+# Django - Strona Jedzonko
 
 ## Opis projektu
 
