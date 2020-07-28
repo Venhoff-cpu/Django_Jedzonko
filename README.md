@@ -8,7 +8,7 @@ Pani Maria chce rozwijać swój biznes, a do zrealizowania swoich celów potrzeb
 
 ## Co do skonfigurowania?
 
-Nie konfigurowaliśmy bazy danych.
+Nie konfigurowaliśmy bazy danych. Należy skonfigurowac ją lokalnie.
 
 Zajrzyj do pliku **settings.py**, znajdziesz w nim następującą sekcję:
 
@@ -23,9 +23,5 @@ except ModuleNotFoundError:
 
 Oznacza to, że Django podczas każdego uruchomienia będzie próbowało zaimportować
 stałą `DATABASES` z pliku **local_settings.py**. Tam trzymaj dane do połączenia.
-Nie umieszczaj tego pliku pod kontrolą Gita. Aby ułatwić Ci pracę, przygotowaliśmy 
-plik **local_settings.py.example**, w którym znajdziesz przygotowane odpowiednie dane.
-Wystarczy tylko, że zmienisz plikowi **local_settings.py.example** nazwę na  **local_settings.py** 
-i uzupełnisz go.
 
 --- 
