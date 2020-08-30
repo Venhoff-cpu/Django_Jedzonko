@@ -1,31 +1,32 @@
 # Django_Jedzonko
 
-## Opis projektu
+## Project description
 
-Pani Maria Iksińska napisała książkę kucharską, która stała się bestsellerem na rynku książek kucharskich w Polsce i zwróciła się do nas z prośba o przygotowanie dla jej czytelników aplikacji do planowania posiłków. Książka Pani Iksińskiej promuje zdrowe odżywianie i podkreśla jak ważną rolę odgrywa w nim planowanie posiłków. Chce zacząć przeprowadzać w całym kraju warsztaty, na których będzie uczyć uczestników planowania posiłków.
+Ms. Maria Iksińska wrote a cookbook that has become a bestseller on the cookbook market in Poland and asked us to prepare a meal planning application for her readers. Mrs. Iksinska's book promotes healthy eating and emphasizes the important role of meal planning in it. She wants to start conducting workshops all over the country where she will teach participants how to plan their meals.
+Maria wants to develop her business and to achieve her goals she needs a business card page and a simple meal planning application.
+The project was created as part of the Scrum workshop.
 
-Pani Maria chce rozwijać swój biznes, a do zrealizowania swoich celów potrzebuje strony-wizytówki oraz prostej aplikacji do planowania posiłków.
+## Requirements
 
-## Co do skonfigurowania?
+Requirements have been listed in requirements.txt.
+It should work with Django 3.1.
 
-Nie konfigurowaliśmy bazy danych.
+## Configuration
 
-Zajrzyj do pliku **settings.py**, znajdziesz w nim następującą sekcję:
+Look at **settings.py** file, you will find the following section in it:
 
 ```python
 try:
-    from scrumlab.local_settings import DATABASES
+    from your.local_settings import DATABASES
 except ModuleNotFoundError:
     print("Brak konfiguracji bazy danych w pliku local_settings.py!")
     print("Uzupełnij dane i spróbuj ponownie!")
     exit(0)
 ```
 
-Oznacza to, że Django podczas każdego uruchomienia będzie próbowało zaimportować
-stałą `DATABASES` z pliku **local_settings.py**. Tam trzymaj dane do połączenia.
-Nie umieszczaj tego pliku pod kontrolą Gita. Aby ułatwić Ci pracę, przygotowaliśmy 
-plik **local_settings.py.example**, w którym znajdziesz przygotowane odpowiednie dane.
-Wystarczy tylko, że zmienisz plikowi **local_settings.py.example** nazwę na  **local_settings.py** 
-i uzupełnisz go.
+This means that Django will try to import
+The constant `DATABASES` from the file **local_settings.py**. Keep the data for connection there.
+Do not put this file under Git's control.
+
 
 --- 
